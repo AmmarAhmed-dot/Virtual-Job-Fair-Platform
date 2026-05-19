@@ -65,10 +65,14 @@
     <style>
         /* Print Stylesheet to target only the preview sheet */
         @media print {
+            @page {
+                margin: 0;
+            }
             body {
                 background: white !important;
                 color: black !important;
                 font-size: 11pt !important;
+                margin: 1.6cm !important;
             }
 
             header,
@@ -94,9 +98,6 @@
             }
 
             #cv-preview-sheet {
-                position: absolute;
-                left: 0;
-                top: 0;
                 width: 100% !important;
                 max-width: 100% !important;
                 border: none !important;

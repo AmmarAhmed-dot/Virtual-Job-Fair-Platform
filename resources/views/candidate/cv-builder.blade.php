@@ -125,10 +125,15 @@
     <style>
         /* Print Stylesheet to target only the preview sheet */
         @media print {
+            @page {
+                margin: 0;
+            }
+
             body {
                 background: white !important;
                 color: black !important;
                 font-size: 11pt !important;
+                margin: 1.6cm !important;
             }
 
             /* Hide everything else */
@@ -155,9 +160,6 @@
 
             /* Unhide only the CV A4 sheet */
             #cv-preview-sheet {
-                position: absolute;
-                left: 0;
-                top: 0;
                 width: 100% !important;
                 max-width: 100% !important;
                 border: none !important;
@@ -165,6 +167,13 @@
                 padding: 0 !important;
                 margin: 0 !important;
                 visibility: visible !important;
+            }
+
+            .cv-preview-container {
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                box-shadow: none !important;
             }
         }
     </style>
@@ -256,11 +265,13 @@
                                             placeholder="username">
                                     </div>
                                     <div>
-                                         <label class="block text-xs font-bold text-gray-500 uppercase mb-1">GitHub Personal Access Token (Optional)</label>
-                                         <input type="password" name="github_token" x-model="cv.github_token"
-                                             class="w-full border-gray-300 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 text-sm shadow-sm"
-                                             placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-                                         <p class="text-[10px] text-gray-400 mt-1">Provide a GitHub PAT to include private repositories & private commits count securely.</p>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">GitHub
+                                            Personal Access Token (Optional)</label>
+                                        <input type="password" name="github_token" x-model="cv.github_token"
+                                            class="w-full border-gray-300 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 text-sm shadow-sm"
+                                            placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                                        <p class="text-[10px] text-gray-400 mt-1">Provide a GitHub PAT to include
+                                            private repositories & private commits count securely.</p>
                                     </div>
                                     <div>
                                         <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Professional
@@ -535,9 +546,9 @@
 
                 <!-- RIGHT SIDE: LIVE LATEX PREVIEW (A4 Mock sheet) -->
                 <div
-                    class="lg:col-span-7 bg-gray-100/50 p-4 sm:p-8 rounded-2xl border border-gray-200/60 shadow-inner no-print-container flex justify-center">
+                    class="lg:col-span-7 bg-gray-100/50 p-4 sm:p-8 rounded-2xl border border-gray-200/60 shadow-inner cv-preview-container flex justify-center">
                     <div id="cv-preview-sheet"
-                        class="bg-white w-[210mm] min-h-[297mm] shadow-2xl border border-gray-200/80 p-8 sm:p-12 text-gray-900 font-serif leading-relaxed text-sm select-text">
+                        class="bg-white w-[210mm] min-h-[297mm] shadow-2xl border border-gray-200/80 p-8 sm:p-12 text-gray-900 font-sans leading-relaxed text-sm select-text">
 
                         <!-- LaTeX Header: Centered Full Name -->
                         <div class="text-center mb-4">
