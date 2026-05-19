@@ -38,7 +38,7 @@ class DashboardController extends Controller
             
             $analysis = null;
             if ($user->cvData && $user->cvData->github_username) {
-                $analysis = $githubService->analyze($user->cvData->github_username);
+                $analysis = $githubService->analyze($user->cvData->github_username, $user->cvData->github_token);
             }
             
             return view('candidate.dashboard', compact('stats', 'analysis'));

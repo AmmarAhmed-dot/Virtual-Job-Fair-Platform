@@ -11,6 +11,7 @@ class CvData extends Model {
         'location',
         'linkedin_url',
         'github_username',
+        'github_token',
         'summary',
         'skills',
         'experience',

@@ -71,6 +71,7 @@ class ProfileController extends Controller
             'location' => 'nullable|string',
             'linkedin_url' => 'nullable|string',
             'github_username' => 'nullable|string',
+            'github_token' => 'nullable|string',
             'skills' => 'nullable|array',
             'experience' => 'nullable|array',
             'projects' => 'nullable|array',
