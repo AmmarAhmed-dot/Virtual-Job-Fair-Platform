@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/institute/jobs', JobPostingController::class)->names('institute.jobs');
         Route::get('/institute/applicants/{job?}', [JobPostingController::class, 'applicants'])->name('institute.applicants');
         Route::get('/institute/applicants/cv/{user}', [JobPostingController::class, 'viewCv'])->name('institute.applicants.cv');
+        Route::get('/institute/applicants/github/{user}', [JobPostingController::class, 'viewGithub'])->name('institute.applicants.github');
         Route::patch('/institute/applications/{application}', [JobPostingController::class, 'updateApplicationStatus'])->name('institute.applications.update');
         Route::get('/institute/events/create', [EventController::class, 'create'])->name('events.create');
         Route::post('/institute/events', [EventController::class, 'store'])->name('events.store');

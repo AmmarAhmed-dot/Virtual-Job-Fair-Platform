@@ -116,19 +116,29 @@ class JobPostingController extends Controller
         return back()->with('success', 'Job posting deleted.');
     }
 
-    public function viewCv(\App\Models\User $user, \App\Services\GithubService $githubService)
+    public function viewCv(\App\Models\User $user)
     {
         $cv = $user->cvData;
         if (!$cv) {
             return back()->with('error', 'Candidate has not built a CV yet.');
         }
 
-        $analysis = null;
-        if ($cv->github_username) {
-            $analysis = $githubService->analyze($cv->github_username, $cv->github_token);
+        return view('institute.applicants.cv', [
+            'candidate' => $user,
+            'cv' => $cv
+        ]);
+    }
+
+    public function viewGithub(\App\Models\User $user, \App\Services\GithubService $githubService)
+    {
+        $cv = $user->cvData;
+        if (!$cv || !$cv->github_username) {
+            return back()->with('error', 'Candidate has not linked their GitHub profile.');
         }
 
-        return view('institute.applicants.cv', [
+        $analysis = $githubService->analyze($cv->github_username, $cv->github_token);
+
+        return view('institute.applicants.github', [
             'candidate' => $user,
             'cv' => $cv,
             'analysis' => $analysis

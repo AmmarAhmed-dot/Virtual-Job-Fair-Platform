@@ -72,7 +72,74 @@ class GithubService
 
             $reposCount = $publicReposCount + $privateReposCount;
 
-            // 3. Fetch Commits Count (supports private commits if token provided)
+            // 3. Fetch Contributions count (GraphQL with Token OR Scraping calendar fallback)
+            $totalContributions = 0;
+            $contributionsFetched = false;
+
+            $createdAt = $profile['created_at'] ?? null;
+            $startYear = $createdAt ? (int) date('Y', strtotime($createdAt)) : (int) date('Y');
+            $endYear = (int) date('Y');
+            // Cap at max 10 years back to prevent excessive requests
+            $startYear = max($startYear, $endYear - 10);
+
+            if ($token) {
+                // Build dynamic GraphQL query with aliases for each year
+                $aliasQueries = [];
+                for ($y = $startYear; $y <= $endYear; $y++) {
+                    $aliasQueries[] = "year{$y}: contributionsCollection(from: \"{$y}-01-01T00:00:00Z\", to: \"{$y}-12-31T23:59:59Z\") {
+                        contributionCalendar {
+                            totalContributions
+                        }
+                    }";
+                }
+
+                $queryStr = "query(\$username: String!) {
+                    user(login: \$username) {
+                        " . implode("\n                        ", $aliasQueries) . "
+                    }
+                }";
+
+                // GraphQL API endpoint uses Bearer token authorization
+                $graphqlResponse = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $token,
+                    'User-Agent' => 'Laravel-Virtual-Job-Fair-Platform',
+                    'Accept' => 'application/vnd.github+json'
+                ])->post('https://api.github.com/graphql', [
+                    'query' => $queryStr,
+                    'variables' => ['username' => $username]
+                ]);
+
+                if ($graphqlResponse->successful()) {
+                    $resData = $graphqlResponse->json();
+                    if (isset($resData['data']['user'])) {
+                        $totalContributions = 0;
+                        foreach ($resData['data']['user'] as $yearData) {
+                            $totalContributions += (int) ($yearData['contributionCalendar']['totalContributions'] ?? 0);
+                        }
+                        $contributionsFetched = true;
+                    }
+                }
+            }
+
+            if (!$contributionsFetched) {
+                // Scrape fallback: loop and fetch public contributions calendar page for each year
+                $totalContributions = 0;
+                for ($y = $startYear; $y <= $endYear; $y++) {
+                    $scrapeResponse = Http::withHeaders([
+                        'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                    ])->get("https://github.com/users/{$username}/contributions?from={$y}-01-01&to={$y}-12-31");
+
+                    if ($scrapeResponse->successful()) {
+                        $html = $scrapeResponse->body();
+                        if (preg_match('/([0-9,]+)\s+contributions/i', $html, $matches)) {
+                            $totalContributions += (int) str_replace(',', '', $matches[1]);
+                            $contributionsFetched = true;
+                        }
+                    }
+                }
+            }
+
+            // Fallback Search APIs for commits and issues breakdown
             $totalCommits = 0;
             $commitsResponse = Http::withHeaders($headers)->get("https://api.github.com/search/commits", [
                 'q' => "author:{$username}"
@@ -82,7 +149,6 @@ class GithubService
                 $totalCommits = $commitsResponse->json()['total_count'] ?? 0;
             }
 
-            // Fetch Pull Requests & Issues Count (supports private if token provided)
             $totalIssuesPrs = 0;
             $issuesResponse = Http::withHeaders($headers)->get("https://api.github.com/search/issues", [
                 'q' => "author:{$username}"
@@ -92,7 +158,11 @@ class GithubService
                 $totalIssuesPrs = $issuesResponse->json()['total_count'] ?? 0;
             }
 
-            $totalContributions = $totalCommits + $totalIssuesPrs;
+            // If the scraped/GraphQL total contributions is somehow 0 or less than the REST API search sum,
+            // fallback to the REST API sum.
+            if ($totalContributions < ($totalCommits + $totalIssuesPrs)) {
+                $totalContributions = $totalCommits + $totalIssuesPrs;
+            }
 
             // 4. Compute real scoring algorithm (Max: 100)
             $contributionsScore = min(40, $totalContributions * 0.16); // max 40 points for 250+ contributions
