@@ -12,7 +12,7 @@
                     {{ __('CV Builder') }}
                 </h2>
             </div>
-            <button type="button" onclick="window.print()"
+            <button type="button" onclick="let origTitle = document.title; document.title = '{{ str_replace(' ', '_', auth()->user()->name) }}_CV'; window.print(); document.title = origTitle;"
                 class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow transition flex items-center space-x-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
