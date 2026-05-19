@@ -20,8 +20,8 @@
         <div class="mt-4">
             <x-input-label for="role" :value="__('I am a')" />
             <select id="role" name="role" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                <option value="candidate">{{ __('Candidate (Job Seeker)') }}</option>
-                <option value="institute">{{ __('Institute (Employer)') }}</option>
+                <option value="candidate" {{ (old('role', request('role')) === 'candidate') ? 'selected' : '' }}>{{ __('Candidate (Job Seeker)') }}</option>
+                <option value="institute" {{ (old('role', request('role')) === 'institute') ? 'selected' : '' }}>{{ __('Institute (Employer)') }}</option>
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>

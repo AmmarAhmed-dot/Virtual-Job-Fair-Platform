@@ -32,12 +32,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center">
-                    <span class="text-2xl font-extrabold gradient-text tracking-tight">VJFP</span>
+                    <a href="{{ url('/') }}" class="text-2xl font-extrabold gradient-text tracking-tight">VJFP</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8 font-semibold text-gray-600">
-                    <a href="#" class="hover:text-indigo-600 transition">For Employers</a>
-                    <a href="#" class="hover:text-indigo-600 transition">For Candidates</a>
-                    <a href="#" class="hover:text-indigo-600 transition">Events</a>
+                    @auth
+                        @if(Auth::user()->role === 'institute')
+                            <a href="{{ route('dashboard') }}" class="hover:text-indigo-600 transition">For Employers</a>
+                        @else
+                            <a href="{{ route('jobs.index') }}" class="hover:text-indigo-600 transition">Browse Jobs</a>
+                        @endif
+                    @else
+                        <a href="{{ route('register', ['role' => 'institute']) }}" class="hover:text-indigo-600 transition">For Employers</a>
+                        <a href="{{ route('jobs.index') }}" class="hover:text-indigo-600 transition">For Candidates</a>
+                    @endauth
+                    <a href="{{ route('events.index') }}" class="hover:text-indigo-600 transition">Events</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     @if (Route::has('login'))
@@ -78,13 +86,20 @@
                             to Dashboard</a>
                     @endif
                 @else
-                    <a href="{{ route('register') }}"
+                    <a href="{{ route('register', ['role' => 'candidate']) }}"
                         class="bg-indigo-600 text-white px-10 py-4 rounded-full text-lg font-bold shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition">Find
                         My Dream Job</a>
                 @endauth
-                <a href="#"
-                    class="border-2 border-gray-200 text-gray-700 px-10 py-4 rounded-full text-lg font-bold hover:bg-white transition">Hire
-                    Talent</a>
+
+                @auth
+                    @if(Auth::user()->role === 'institute')
+                        <a href="{{ route('institute.jobs.create') }}"
+                            class="border-2 border-gray-200 text-gray-700 px-10 py-4 rounded-full text-lg font-bold hover:bg-white transition">Post a Job</a>
+                    @endif
+                @else
+                    <a href="{{ route('register', ['role' => 'institute']) }}"
+                        class="border-2 border-gray-200 text-gray-700 px-10 py-4 rounded-full text-lg font-bold hover:bg-white transition">Hire Talent</a>
+                @endauth
             </div>
         </div>
 
