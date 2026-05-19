@@ -136,7 +136,11 @@ class JobPostingController extends Controller
             return back()->with('error', 'Candidate has not linked their GitHub profile.');
         }
 
-        $analysis = $githubService->analyze($cv->github_username, $cv->github_token);
+        $forceRefresh = request()->has('refresh');
+        $analysis = $githubService->analyze($cv->github_username, $cv->github_token, $forceRefresh);
+        if ($forceRefresh) {
+            return redirect()->route('institute.applicants.github', $user)->with('success', 'GitHub profile analysis data synchronized!');
+        }
 
         return view('institute.applicants.github', [
             'candidate' => $user,

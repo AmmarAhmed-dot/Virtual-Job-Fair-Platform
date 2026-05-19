@@ -7,11 +7,15 @@ use Illuminate\Support\Facades\Cache;
 
 class GithubService
 {
-    public function analyze($username, $token = null)
+    public function analyze($username, $token = null, $forceRefresh = false)
     {
         if (!$username) return null;
 
         $cacheKey = 'github_analysis_' . $username . '_' . md5($token ?? '');
+
+        if ($forceRefresh) {
+            Cache::forget($cacheKey);
+        }
 
         // Cache the analysis for 2 hours (7200 seconds) to avoid rate limits
         return Cache::remember($cacheKey, 7200, function () use ($username, $token) {

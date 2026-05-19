@@ -15,6 +15,23 @@
 
     <div class="py-12">
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            @if(session('success'))
+                <div class="mb-4 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl shadow-sm flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="font-medium text-sm">{{ session('success') }}</span>
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="mb-4 p-4 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl shadow-sm flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="font-medium text-sm">{{ session('error') }}</span>
+                </div>
+            @endif
+
             <div
                 class="p-6 bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-2xl relative overflow-hidden">
                 <!-- Background glow decoration -->
@@ -53,17 +70,29 @@
                             </a>
                         </div>
                     </div>
-                    <div
-                        class="flex items-center space-x-3 bg-slate-800/85 px-4 py-2 rounded-xl border border-slate-700/60">
-                        <div class="text-right">
-                            <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Developer Rank</p>
-                            <p class="text-lg font-black text-indigo-400">{{ $analysis['score'] }}/100</p>
-                        </div>
+                    <div class="flex items-center space-x-3">
+                        <!-- Sync Button -->
+                        <a href="{{ route('institute.applicants.github', ['user' => $candidate, 'refresh' => 1]) }}" 
+                           onclick="this.classList.add('pointer-events-none', 'opacity-70'); this.querySelector('svg').classList.add('animate-spin');"
+                           class="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white text-xs font-bold px-3 py-2 rounded-xl transition duration-150 ease-in-out shadow-lg hover:shadow-indigo-500/20 border border-indigo-500/30 cursor-pointer group">
+                            <svg class="w-4 h-4 transition-transform duration-500 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
+                            </svg>
+                            <span>Sync Data</span>
+                        </a>
+
                         <div
-                            class="w-10 h-10 rounded-full border-4 border-indigo-500/20 flex items-center justify-center relative">
-                            <div class="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin"
-                                style="animation-duration: 3s;"></div>
-                            <span class="text-[11px] font-black text-white">{{ $analysis['score'] }}</span>
+                            class="flex items-center space-x-3 bg-slate-800/85 px-4 py-2 rounded-xl border border-slate-700/60">
+                            <div class="text-right">
+                                <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Developer Rank</p>
+                                <p class="text-lg font-black text-indigo-400">{{ $analysis['score'] }}/100</p>
+                            </div>
+                            <div
+                                class="w-10 h-10 rounded-full border-4 border-indigo-500/20 flex items-center justify-center relative">
+                                <div class="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin"
+                                    style="animation-duration: 3s;"></div>
+                                <span class="text-[11px] font-black text-white">{{ $analysis['score'] }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>

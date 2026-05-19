@@ -38,7 +38,11 @@ class DashboardController extends Controller
             
             $analysis = null;
             if ($user->cvData && $user->cvData->github_username) {
-                $analysis = $githubService->analyze($user->cvData->github_username, $user->cvData->github_token);
+                $forceRefresh = request()->has('refresh');
+                $analysis = $githubService->analyze($user->cvData->github_username, $user->cvData->github_token, $forceRefresh);
+                if ($forceRefresh) {
+                    return redirect()->route('dashboard')->with('success', 'GitHub profile analysis data synchronized!');
+                }
             }
             
             return view('candidate.dashboard', compact('stats', 'analysis'));
