@@ -8,7 +8,7 @@
                 </svg>
             </a>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('GitHub AI Profile Analysis') }} - {{ $candidate->name }}
+                {{ __('GitHub Profile Analysis') }} - {{ $candidate->name }}
             </h2>
         </div>
     </x-slot>
@@ -35,7 +35,7 @@
                         </div>
                         <div>
                             <h3 class="text-lg font-extrabold text-white tracking-tight flex items-center">
-                                AI GitHub Profile Analysis
+                                GitHub Profile Analysis
                                 @if($analysis['has_token'])
                                     <span
                                         class="ml-2 text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Private
@@ -133,7 +133,7 @@
                         </div>
                     @endif
                     <div class="{{ count($analysis['languages']) > 0 ? 'md:col-span-7' : 'md:col-span-12' }}">
-                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">AI Profile Insight
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Profile Insight
                         </h4>
                         <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-800/60">
                             <p class="text-slate-300 text-xs font-medium leading-relaxed italic">
