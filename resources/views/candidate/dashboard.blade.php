@@ -144,8 +144,29 @@
                                 @endif
                                 <div class="{{ count($analysis['languages']) > 0 ? 'md:col-span-7' : 'md:col-span-12' }}">
                                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Profile Insight</h4>
+                                    @php
+                                        $personalizedSummary = str_replace(
+                                            [
+                                                'this developer maintains',
+                                                'They have made',
+                                                'Their most used',
+                                                'This developer displays',
+                                                'This developer shows',
+                                                'This is an emerging developer profile'
+                                            ],
+                                            [
+                                                'you maintain',
+                                                'You have made',
+                                                'Your most used',
+                                                'You display',
+                                                'You show',
+                                                'Yours is an emerging developer profile'
+                                            ],
+                                            $analysis['summary']
+                                        );
+                                    @endphp
                                     <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-800/60">
-                                        <p class="text-slate-300 text-xs font-medium leading-relaxed italic">"{{ $analysis['summary'] }}"</p>
+                                        <p class="text-slate-300 text-xs font-medium leading-relaxed italic">"{{ $personalizedSummary }}"</p>
                                     </div>
                                 </div>
                             </div>
