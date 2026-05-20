@@ -15,7 +15,7 @@
                         <tr>
                             <th class="p-4">Title</th>
                             <th class="p-4">Scheduled At</th>
-                            <th class="p-4">Link</th>
+                            <th class="p-4">Virtual Room</th>
                             <th class="p-4 text-right">Actions</th>
                         </tr>
                     </thead>
@@ -25,11 +25,10 @@
                             <td class="p-4 font-bold text-gray-900">{{ $event->title }}</td>
                             <td class="p-4">{{ \Carbon\Carbon::parse($event->scheduled_at)->format('M d, Y @ h:i A') }}</td>
                             <td class="p-4">
-                                @if($event->link)
-                                    <a href="{{ $event->link }}" target="_blank" class="text-indigo-600 underline hover:text-indigo-800">{{ $event->link }}</a>
-                                @else
-                                    <span class="text-gray-400">No Link</span>
-                                @endif
+                                <a href="{{ route('events.room', $event) }}" class="inline-flex items-center space-x-1 text-indigo-600 hover:text-indigo-800 font-bold bg-indigo-50 px-3 py-1.5 rounded-lg transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    <span>Virtual Room</span>
+                                </a>
                             </td>
                             <td class="p-4 text-right space-x-2">
                                 <a href="{{ route('events.edit', $event) }}" class="text-xs bg-gray-200 text-gray-700 px-3 py-1.5 rounded font-bold hover:bg-gray-300">Edit</a>

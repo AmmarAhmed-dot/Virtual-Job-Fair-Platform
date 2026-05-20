@@ -18,15 +18,9 @@
                         <label class="block font-bold mb-2">Event Title</label>
                         <input type="text" name="title" class="w-full border-gray-300 rounded" required placeholder="e.g. Virtual Tech Career Fair 2026">
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block font-bold mb-2">Scheduled Date & Time</label>
-                            <input type="datetime-local" name="scheduled_at" class="w-full border-gray-300 rounded" required>
-                        </div>
-                        <div>
-                            <label class="block font-bold mb-2">Meeting/Event Link</label>
-                            <input type="url" name="link" class="w-full border-gray-300 rounded" placeholder="https://zoom.us/j/...">
-                        </div>
+                    <div class="mb-4">
+                        <label for="scheduled_at" class="block font-bold mb-2">Scheduled Date & Time</label>
+                        <input type="datetime-local" name="scheduled_at" id="scheduled_at" required class="w-full border-gray-300 rounded focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="mb-4">
                         <label class="block font-bold mb-2">Description</label>

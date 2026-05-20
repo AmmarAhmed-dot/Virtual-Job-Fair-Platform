@@ -25,7 +25,6 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'scheduled_at' => 'required|date',
-            'link' => 'nullable|url',
         ]);
 
         auth()->user()->company->events()->create($request->all());
@@ -50,7 +49,6 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'scheduled_at' => 'required|date',
-            'link' => 'nullable|url',
             'description' => 'nullable|string',
         ]);
 
@@ -68,5 +66,19 @@ class EventController extends Controller
         $event->delete();
 
         return redirect()->route('events.index')->with('success', 'Event deleted successfully!');
+    }
+
+    public function room(Event $event)
+    {
+        $user = auth()->user();
+        
+        $roomName = 'vjfp_event_' . $event->id . '_' . md5($event->created_at);
+
+        return view('events.room', [
+            'event' => $event,
+            'roomName' => $roomName,
+            'userName' => $user->name,
+            'isHost' => ($user->role === 'institute' && $user->company && $user->company->id === $event->company_id)
+        ]);
     }
 }

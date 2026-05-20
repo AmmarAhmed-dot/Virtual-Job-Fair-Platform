@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/jobs/{job}', [JobPostingController::class, 'show'])->name('jobs.show');
     Route::get('/events', [EventController::class, 'index'])->name('events.index');
+    Route::get('/events/{event}/room', [EventController::class, 'room'])->name('events.room');
     Route::get('/interview/{application}/room', [InterviewController::class, 'room'])->name('interviews.room');
 
     // Admin Routes

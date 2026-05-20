@@ -17,11 +17,7 @@
                         <span class="text-xs font-bold text-gray-500 uppercase">
                             {{ \Carbon\Carbon::parse($event->scheduled_at)->format('M d, Y @ h:i A') }}
                         </span>
-                        @if($event->link)
-                            <a href="{{ $event->link }}" target="_blank" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-100">Join Event</a>
-                        @else
-                            <span class="text-xs text-gray-400">No meeting link</span>
-                        @endif
+                        <a href="{{ route('events.room', $event) }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-100">Join Virtual Room</a>
                     </div>
                 </div>
                 @endforeach
