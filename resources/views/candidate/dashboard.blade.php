@@ -166,6 +166,7 @@
                                         );
                                     @endphp
                                     <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-800/60">
+                                        <!-- <p class="text-slate-300 text-xs font-medium leading-relaxed italic">"{{ $analysis['summary'] }}"</p> -->
                                         <p class="text-slate-300 text-xs font-medium leading-relaxed italic">"{{ $personalizedSummary }}"</p>
                                     </div>
                                 </div>
