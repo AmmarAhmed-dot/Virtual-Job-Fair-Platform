@@ -29,9 +29,9 @@
         $skills = $cv->skills;
         if (!is_array($skills)) {
             $skills = empty($skills) ? [
-                ['category' => 'Languages & Frameworks', 'list' => 'React.js, Next.js, Node.js, Electron.js, PHP, Laravel, Flutter'],
-                ['category' => 'Databases', 'list' => 'MySQL, PostgreSQL, MongoDB, Firebase'],
-                ['category' => 'Infrastructure & Tools', 'list' => 'GitHub Actions, Docker, SVN, App Store Connect'],
+                ['category' => 'Languages & Frameworks', 'list' => ''],
+                ['category' => 'Databases', 'list' => ''],
+                ['category' => 'Infrastructure & Tools', 'list' => ''],
             ] : [['category' => 'Technical Skills', 'list' => $skills]];
         }
 
@@ -40,14 +40,11 @@
         if (!is_array($experience)) {
             $experience = empty($experience) ? [
                 [
-                    'duration' => 'May 2025 -- Present',
-                    'role' => 'Senior Software Engineer',
-                    'company' => 'Webscare',
-                    'location' => 'Sargodha, Pakistan',
-                    'bullets' => [
-                        'Engineered high-traffic Next.js platforms using headless architectures and Apollo Client.',
-                        'Optimized React performance via memoization to handle data-heavy admin dashboards.',
-                    ]
+                    'duration' => '',
+                    'role' => '',
+                    'company' => '',
+                    'location' => '',
+                    'bullets' => ['']
                 ]
             ] : [
                 [
@@ -65,9 +62,9 @@
         if (!is_array($projects)) {
             $projects = empty($projects) ? [
                 [
-                    'name' => 'GDPR Compliance Hub',
-                    'description' => 'Architected an automated scanner and central hub for GDPR-compliant software products and security tools.',
-                    'link' => 'https://dashboard.gosign.de/'
+                    'name' => '',
+                    'description' => '',
+                    'link' => ''
                 ]
             ] : [];
         }
@@ -77,10 +74,10 @@
         if (!is_array($education)) {
             $education = empty($education) ? [
                 [
-                    'duration' => '2020 -- 2024',
-                    'degree' => 'Bachelor of Science in Information Technology',
-                    'institution' => 'University of Sargodha',
-                    'gpa' => 'CGPA: 2.08'
+                    'duration' => '',
+                    'degree' => '',
+                    'institution' => '',
+                    'gpa' => ''
                 ]
             ] : [
                 [
@@ -97,22 +94,18 @@
         if (!is_array($languages)) {
             $languages = empty($languages) ? [
                 [
-                    'name' => 'English',
-                    'proficiency' => 'IELTS 6.5'
-                ],
-                [
-                    'name' => 'Urdu',
-                    'proficiency' => 'Native'
+                    'name' => '',
+                    'proficiency' => ''
                 ]
             ] : [];
         }
 
         $cvData = [
-            'summary' => $cv->summary ?? 'Senior Software Engineer specializing in privacy-first, scalable web and mobile applications.',
-            'phone' => $cv->phone ?? '+92 310 1714636',
-            'location' => $cv->location ?? 'Sargodha, Pakistan',
-            'linkedin_url' => $cv->linkedin_url ?? 'linkedin.com/in/ammar-ahmed-dot',
-            'github_username' => $cv->github_username ?? 'AmmarAhmed-dot',
+            'summary' => $cv->summary ?? '',
+            'phone' => $cv->phone ?? '',
+            'location' => $cv->location ?? '',
+            'linkedin_url' => $cv->linkedin_url ?? '',
+            'github_username' => $cv->github_username ?? '',
             'github_token' => $cv->github_token ?? '',
             'skills' => $skills,
             'experience' => $experience,
@@ -347,7 +340,7 @@
                                                     <input type="text" :name="`experience[${expIdx}][company]`"
                                                         x-model="exp.company"
                                                         class="w-full border-gray-300 rounded-lg text-xs py-1.5"
-                                                        placeholder="e.g. Webscare">
+                                                        placeholder="e.g. Devsinc">
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2 gap-2 mb-2">
@@ -415,7 +408,7 @@
                                                     <input type="text" :name="`projects[${index}][name]`"
                                                         x-model="proj.name"
                                                         class="w-full border-gray-300 rounded-lg text-xs py-1.5"
-                                                        placeholder="e.g. GDPR Compliance Hub">
+                                                        placeholder="e.g. Virtual Job Fair Platform">
                                                 </div>
                                                 <div>
                                                     <label
@@ -487,7 +480,7 @@
                                                     <input type="text" :name="`education[${index}][gpa]`"
                                                         x-model="edu.gpa"
                                                         class="w-full border-gray-300 rounded-lg text-xs py-1.5"
-                                                        placeholder="e.g. CGPA: 2.08">
+                                                        placeholder="e.g. CGPA: 3.28">
                                                 </div>
                                             </div>
                                         </div>
