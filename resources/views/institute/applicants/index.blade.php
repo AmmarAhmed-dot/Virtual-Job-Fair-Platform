@@ -57,8 +57,19 @@
                                                 value="{{ $application->interview_at }}"
                                                 class="text-xs border-gray-300 rounded p-1">
                                             <label class="text-[9px] font-bold text-gray-500 uppercase mt-1">Meeting Link</label>
-                                            <input type="url" name="meeting_link" value="{{ $application->meeting_link }}"
-                                                class="text-xs border-gray-300 rounded p-1" placeholder="https://zoom.us/j/...">
+                                            <div class="flex items-center space-x-1">
+                                                <input type="url" name="meeting_link" value="{{ $application->meeting_link }}" id="meeting-link-{{ $application->id }}"
+                                                    class="text-xs border-gray-300 rounded p-1 flex-1" placeholder="https://zoom.us/...">
+                                                <button type="button" onclick="document.getElementById('meeting-link-{{ $application->id }}').value = '{{ route('interviews.room', $application) }}'"
+                                                    class="bg-purple-100 text-purple-700 hover:bg-purple-200 px-2 py-1 rounded text-[9px] font-bold border border-purple-200 transition" title="Generate Virtual Video Room">
+                                                    Virtual Room
+                                                </button>
+                                            </div>
+                                            @if($application->meeting_link)
+                                                <a href="{{ $application->meeting_link }}" target="_blank" class="mt-1.5 text-center bg-green-600 text-white text-[12px] py-1 px-2 rounded font-bold hover:bg-green-700 transition block shadow-sm">
+                                                    Join Meeting
+                                                </a>
+                                            @endif
                                         </div>
                                         <button type="submit"
                                             class="bg-indigo-600 text-white text-xs py-1.5 rounded font-bold hover:bg-indigo-700 transition">Update</button>

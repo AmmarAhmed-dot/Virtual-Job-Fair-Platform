@@ -29,6 +29,59 @@
                     </div>
                 </div>
             </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="bg-white p-6 rounded-lg shadow-sm border">
+                    <h3 class="font-bold mb-4 text-gray-700">Applications by Status</h3>
+                    <canvas id="applicationsStatusChart" height="200"></canvas>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border">
+                    <h3 class="font-bold mb-4 text-gray-700">Jobs by Category</h3>
+                    <canvas id="jobsCategoryChart" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart.js -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const statusCtx = document.getElementById('applicationsStatusChart');
+                    const categoryCtx = document.getElementById('jobsCategoryChart');
+
+                    const statusData = @json($chartData['applications_by_status']);
+                    const categoryData = @json($chartData['jobs_by_category']);
+
+                    if(statusCtx && Object.keys(statusData).length > 0) {
+                        new Chart(statusCtx, {
+                            type: 'pie',
+                            data: {
+                                labels: Object.keys(statusData).map(k => k.charAt(0).toUpperCase() + k.slice(1)),
+                                datasets: [{
+                                    data: Object.values(statusData),
+                                    backgroundColor: ['#818cf8', '#34d399', '#fbbf24', '#f87171'],
+                                }]
+                            }
+                        });
+                    }
+
+                    if(categoryCtx && Object.keys(categoryData).length > 0) {
+                        new Chart(categoryCtx, {
+                            type: 'bar',
+                            data: {
+                                labels: Object.keys(categoryData),
+                                datasets: [{
+                                    label: 'Number of Jobs',
+                                    data: Object.values(categoryData),
+                                    backgroundColor: '#818cf8',
+                                }]
+                            },
+                            options: {
+                                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                            }
+                        });
+                    }
+                });
+            </script>
         </div>
     </div>
 </x-app-layout>

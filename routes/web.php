@@ -6,6 +6,7 @@ use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InterviewController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/jobs/{job}', [JobPostingController::class, 'show'])->name('jobs.show');
     Route::get('/events', [EventController::class, 'index'])->name('events.index');
+    Route::get('/interview/{application}/room', [InterviewController::class, 'room'])->name('interviews.room');
 
     // Admin Routes
     Route::middleware('role:admin')->group(function () {

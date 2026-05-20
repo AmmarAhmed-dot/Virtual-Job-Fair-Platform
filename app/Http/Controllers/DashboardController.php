@@ -20,16 +20,31 @@ class DashboardController extends Controller
                 'pending_jobs' => JobPosting::where('status', 'pending')->count(),
                 'active_events' => Event::count(),
             ];
-            return view('admin.dashboard', compact('stats'));
+            $chartData = [
+                'applications_by_status' => JobApplication::selectRaw('status, count(*) as count')->groupBy('status')->pluck('count', 'status'),
+                'jobs_by_category' => JobPosting::selectRaw('category_id, count(*) as count')->with('category')->groupBy('category_id')->get()->mapWithKeys(function ($item) { 
+                    return [$item->category ? $item->category->name : 'Unknown' => $item->count]; 
+                })
+            ];
+            return view('admin.dashboard', compact('stats', 'chartData'));
         } elseif ($user->role === 'institute') {
             $company = $user->company;
+            $jobIds = $company->jobPostings()->pluck('id');
             $stats = [
-                'my_jobs' => $company->jobPostings()->count(),
-                'total_applicants' => JobApplication::whereIn('job_posting_id', $company->jobPostings()->pluck('id'))->count(),
-                'scheduled_interviews' => JobApplication::whereIn('job_posting_id', $company->jobPostings()->pluck('id'))
+                'my_jobs' => $jobIds->count(),
+                'total_applicants' => JobApplication::whereIn('job_posting_id', $jobIds)->count(),
+                'scheduled_interviews' => JobApplication::whereIn('job_posting_id', $jobIds)
                     ->where('status', 'interviewing')->count(),
             ];
-            return view('institute.dashboard', compact('stats'));
+            $chartData = [
+                'applications_by_status' => JobApplication::whereIn('job_posting_id', $jobIds)
+                    ->selectRaw('status, count(*) as count')->groupBy('status')->pluck('count', 'status'),
+                'applications_by_job' => JobApplication::whereIn('job_posting_id', $jobIds)
+                    ->selectRaw('job_posting_id, count(*) as count')->with('jobPosting')->groupBy('job_posting_id')->get()->mapWithKeys(function ($item) {
+                        return [$item->jobPosting ? $item->jobPosting->title : 'Unknown' => $item->count];
+                    })
+            ];
+            return view('institute.dashboard', compact('stats', 'chartData'));
         } else {
             $stats = [
                 'my_applications' => $user->applications()->count(),
