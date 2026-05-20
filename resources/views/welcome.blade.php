@@ -120,6 +120,7 @@
                 <p class="text-gray-500 max-w-xl mx-auto font-medium">Everything you need to succeed in the modern job
                     market, all in one place.</p>
             </div>
+            <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"> -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div
                     class="p-8 rounded-3xl bg-gray-50 hover:bg-indigo-50 transition border border-transparent hover:border-indigo-100">
@@ -149,7 +150,7 @@
                     <p class="text-gray-600 leading-relaxed">Craft a professional CV using structured templates designed
                         to compile beautifully for recruiters.</p>
                 </div>
-                <div
+                <!-- <div
                     class="p-8 rounded-3xl bg-gray-50 hover:bg-blue-50 transition border border-transparent hover:border-blue-100">
                     <div
                         class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-100">
@@ -162,6 +163,17 @@
                     <h3 class="text-2xl font-bold mb-4">Virtual Events</h3>
                     <p class="text-gray-600 leading-relaxed">Host and participate in large-scale career fairs, webinars,
                         and networking events from anywhere.</p>
+                </div> -->
+                <div
+                    class="p-8 rounded-3xl bg-gray-50 hover:bg-green-50 transition border border-transparent hover:border-green-100">
+                    <div
+                        class="w-14 h-14 bg-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-green-100">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Real-Time Interviews</h3>
+                    <p class="text-gray-600 leading-relaxed">Schedule and conduct built-in virtual interviews seamlessly using dynamically generated secure video rooms.</p>
                 </div>
             </div>
         </div>
